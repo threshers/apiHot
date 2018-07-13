@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- MVC配置 -->
+	<context:component-scan base-package="com.controller.system" />
+	<context:component-scan base-package="com.service.system.impl"></context:component-scan>
+	<mvc:annotation-driven />
+	<!-- end MVC配置 -->
+
+	<!-- Mybatis整合资源 -->
+	<!-- 连接池/数据源 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/myblug?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=true" />
+		<property name="username" value="root" />
+		<property name="password" value="8848" />
+	</bean>
+	<!-- 接口生成工厂 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis/mybatis.xml"></property>
+		
+		<property name="mapperLocations"
+			value="classpath:com/mapper/system/*.xml" />
+	</bean>
+	<!-- 接口注入映射器 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.dao.system" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	<!-- end Mybatis -->
+
+
+</beans>

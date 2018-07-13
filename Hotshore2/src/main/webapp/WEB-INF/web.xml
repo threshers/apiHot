@@ -1,0 +1,34 @@
+<web-app>
+       <!-- 配置Spring配置文件 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/spring.xml</param-value>
+	</context-param>
+	<!-- end 配置文件 -->
+	
+	<!-- MVC核心控制器 -->
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value></param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>*.do</url-pattern>
+		<url-pattern>*.ajax</url-pattern>
+	</servlet-mapping>
+	<!-- end MVC核心控制器 -->
+	
+	<!-- IOC容器初始化监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- end IOC初始化 -->
+
+
+
+</web-app>
